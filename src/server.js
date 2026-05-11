@@ -11,7 +11,6 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import notesRouter from './routes/notesRoutes.js';
 
 
-export const setupServer = async () => {
 
   const app = express();
   await connectMongoDB();
@@ -29,7 +28,6 @@ export const setupServer = async () => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-};
 
-setupServer();
+
 
