@@ -7,9 +7,11 @@ import {
   updateNoteSchema,
 } from '../validations/notesValidation.js';
 import { celebrate } from 'celebrate';
+import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
+router.use('/notes', authenticate);
 router.get('/notes', celebrate(getAllNotesSchema), notesController.getAllNotes);
 router.get('/notes/:noteId', celebrate(noteIdSchema),notesController.getNoteById);
 router.post('/notes', celebrate(createNoteSchema),notesController.createNote);
