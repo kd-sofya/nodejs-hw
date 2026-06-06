@@ -26,8 +26,9 @@ import userRoutes from './routes/userRoutes.js';
   app.use(notesRouter);
   app.use(userRoutes);
 
-  app.use(errors());
+  
   app.use(notFoundHandler);
+app.use(errors());
   app.use(errorHandler);
 
   const PORT = Number(process.env.PORT) || 3000;
