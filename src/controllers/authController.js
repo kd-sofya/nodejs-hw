@@ -187,4 +187,35 @@ export const requestResetEmail = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
+   const { token, password } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findOne({
+      _id: decoded.sub,
+      email: decoded.email,
+    });
+
+    if (!user) {
+      throw createHttpError(404, 'User not found');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({
+      message: 'Password reset successfully',
+    });
+  } catch (error) {
+    if (
+      error.name === 'TokenExpiredError' ||
+      error.name === 'JsonWebTokenError'
+    ) {
+      throw createHttpError(401, 'Invalid or expired token');
+    }
+    throw error;
+  }
 };

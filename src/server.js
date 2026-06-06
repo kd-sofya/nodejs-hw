@@ -12,7 +12,7 @@ import notesRouter from './routes/notesRoutes.js';
 import { errors } from 'celebrate';
 import authRoutes from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
-
+import userRoutes from './routes/userRoutes.js';
 
   const app = express();
   await connectMongoDB();
@@ -24,6 +24,7 @@ import cookieParser from 'cookie-parser';
   app.use(express.json());
   app.use(authRoutes);
   app.use(notesRouter);
+  app.use(userRoutes);
 
   app.use(errors());
   app.use(notFoundHandler);
